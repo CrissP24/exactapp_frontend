@@ -1,0 +1,125 @@
+.overlay {
+    position: fixed; /* Para que quede encima de todo */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.432); /* Fondo oscuro semitransparente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Asegura que esté al frente */
+  }
+  
+  .floating-form {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  .form-container-product {
+    background-color: #fceeff;
+    border: 2px solid #b300ff;
+    border-radius: 10px;
+    padding: 20px;
+    width: 350px;
+    position: relative;
+    font-family: Arial, sans-serif;
+    color: #2d0034;
+  }
+  
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  
+  
+  .icon-section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+  }
+  
+  .icon-btn,
+  .color-btn,
+  .price-btn {
+    border: 2px solid #a200ff;
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  form input {
+    width: 95%;
+    padding: 8px;
+    margin-top: 6px;
+    margin-bottom: 10px;
+    border: 2px solid #bb52b6;
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: #fff3f3;
+  }
+  
+  form select{
+    width: 87%;
+    padding: 8px;
+    margin-top: 6px;
+    margin-bottom: 10px;
+    border: 2px solid #bb52b6;
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: #fff3f3;
+  }
+  .row-inputs {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .row-inputs input,
+  .row-inputs select {
+    flex: 1;
+  }
+  
+  .save-btn {
+    background-color: #b300ff;
+    color: white;
+    padding: 12px;
+    width: 100%;
+    border: none;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 16px;
+  }
+  
+  .save-btn:hover {
+    background-color: #9900cc;
+  }
+  .mas-button {
+    background-color: rgba(128, 0, 128, 0.856);
+    color: white;
+    border: none;
+    padding: 8px;
+    margin-left: 10px;
+    border-radius: 5px;
+    width: 35px;
+    height: 34px;
+  }
+  .mas-button:hover{
+    transform: translateY(-1px);
+  }

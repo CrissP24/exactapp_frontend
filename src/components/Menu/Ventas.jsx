@@ -1,230 +1,72 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "../../css/MenuCss/EstiloVentas.css";
 
-const NuevaVenta = ({ cargarContenido }) => {
-  const [showClientList, setShowClientList] = useState(false);
-  const [showProductList, setShowProductList] = useState(false);
-  const [selectedClient, setSelectedClient] = useState("");
-  const [selectedProducts, setSelectedProducts] = useState([]);
-  const [clients, setClients] = useState([]);
-  const [categories, setCategories] = useState([]);
+const VentasM = () => {
+  const [invoiceNumber, setInvoiceNumber] = useState("00050");
+  const [date, setDate] = useState("2024-09-13");
+  const [client, setClient] = useState("");
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-
-  const COMPANIA_ID = "3fa85f64-5717-4562-b3fc-2c963f66afa6";
-  const USERS_API_URL = `https://aadministracion.infor-business.com/api/1.0/Usuario?CompaniaId=${COMPANIA_ID}`;
-  const CATEGORIA_API_URL = `https://nova-inventario-api.infor-business.com/inventario/1.0/${COMPANIA_ID}/Categoria`;
-  const ARTICULO_API_URL = `https://nova-inventario-api.infor-business.com/inventario/1.0/${COMPANIA_ID}/Articulo?CompaniaId=${COMPANIA_ID}`;
-
-  // Fetch clients
-  useEffect(() => {
-    const fetchClients = async () => {
-      setLoading(true);
-      try {
-        const response = await fetch(USERS_API_URL, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            // 'Authorization': `Bearer ${token}` // Uncomment and add token if needed
-          },
-        });
-
-        if (!response.ok) throw new Error("Error al obtener los clientes");
-        const result = await response.json();
-        setClients(result.data || []);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchClients();
-  }, []);
-
-  // Fetch categories
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await fetch(CATEGORIA_API_URL, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            // 'Authorization': `Bearer ${token}` // Uncomment and add token if needed
-          },
-        });
-
-        if (!response.ok) throw new Error("Error al obtener las categorías");
-        const result = await response.json();
-        setCategories(result.data || []);
-      } catch (error) {
-        setError(error.message);
-      }
-    };
-    fetchCategories();
-  }, []);
-
-  // Fetch products (articulos)
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch(ARTICULO_API_URL, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            // 'Authorization': `Bearer ${token}` // Uncomment and add token if needed
-          },
-        });
-
-        if (!response.ok) throw new Error("Error al obtener los productos");
-        const result = await response.json();
-        setProducts(result.data || []);
-      } catch (error) {
-        setError(error.message);
-      }
-    };
-    fetchProducts();
-  }, []);
-
-  // Calculate item count per category
-  const getItemCountPerCategory = (categoriaId) => {
-    return products.filter(product => product.categoriaId === categoriaId).length;
-  };
-
-  const handleClientSelect = (client) => {
-    setSelectedClient(client);
-    setShowClientList(false);
-    setShowProductList(true);
-  };
-
-  const handleProductSelect = (product) => {
-    if (!selectedProducts.includes(product)) {
-      setSelectedProducts([...selectedProducts, product]);
-    }
-  };
+  const [categories] = useState([
+    { nombre: "Categoría", items: "Items", color: "#ffb3c6" },
+    { nombre: "Categoría", items: "Items", color: "#ffb3c6" },
+    { nombre: "Categoría", items: "Items", color: "#ffb3c6" },
+    { nombre: "Electronica", items: 3, color: "#b9fbc0" },
+  ]);
 
   return (
-    <div className="container">
-      <div className="venta-section">
-        <h2>Agregar Nueva Venta</h2>
-        <div className="form-group">
-          <label>Número de factura</label>
-          <input type="number" defaultValue="00050" />
+    <div style={{ minHeight: '100vh', background: '#fff', padding: 0 }}>
+      {/* Header avatar y datos */}
+      <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', padding: '20px 30px 0 30px' }}>
+        <div style={{ textAlign: 'right', marginRight: 30 }}>
+          <div style={{ fontWeight: 600, color: '#6a1b9a', fontSize: 16 }}>Nombre del Negocio</div>
+          <div style={{ color: '#6a1b9a', fontSize: 14 }}>Categoría del negocio</div>
         </div>
-        <div className="form-group">
-          <label>Fecha</label>
-          <input type="date" defaultValue="2024-09-13" />
-        </div>
-        <div className="form-group cliente-input">
-          <input
-            type="text"
-            placeholder="Nombre del Cliente"
-            value={selectedClient || ""}
-            readOnly
-          />
-          <button className="add-button" onClick={() => setShowClientList(true)}>
-            +
-          </button>
+        <div style={{ background: '#f3e5f5', border: '2px solid #d8b4e2', borderRadius: '50%', width: 60, height: 60, display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: 6 }}>
+          <span style={{ fontSize: 40 }}>👤</span>
         </div>
       </div>
-
-      <div className="categorias-section">
-        <h2>Categorías</h2>
-        <div className="categoria-container">
-          {categories.map((cat, index) => (
-            <div key={index} className={`categoria ${cat.nombre.toLowerCase()}`}>
-              {cat.nombre} <br /> {getItemCountPerCategory(cat.id)}
+      <div style={{ padding: 30 }}>
+        <div style={{ display: 'flex', gap: 20, marginBottom: 0 }}>
+          {/* Panel Agregar Nueva Venta */}
+          <div style={{ flex: 1, border: '2px solid #d33fff', borderRadius: 12, background: '#fff', padding: 20, minWidth: 280, maxWidth: 500 }}>
+            <div style={{ fontWeight: 700, fontSize: 22, color: '#222', textAlign: 'center', marginBottom: 18, letterSpacing: 1, fontFamily: 'monospace' }}>Agregar Nueva Venta</div>
+            <div style={{ display: 'flex', gap: 10, marginBottom: 14 }}>
+              <div style={{ flex: 1 }}>
+                <div style={{ color: '#6a1b9a', fontWeight: 600, marginBottom: 4 }}>Número de factura</div>
+                <input type="text" value={invoiceNumber} onChange={e => setInvoiceNumber(e.target.value)} style={{ width: '100%', border: '2px solid #d33fff', borderRadius: 6, padding: 8, background: '#fff', textAlign: 'center' }} />
+              </div>
+              <div style={{ flex: 1 }}>
+                <div style={{ color: '#6a1b9a', fontWeight: 600, marginBottom: 4 }}>Fecha</div>
+                <input type="date" value={date} onChange={e => setDate(e.target.value)} style={{ width: '100%', border: '2px solid #d33fff', borderRadius: 6, padding: 8, background: '#fff', textAlign: 'center' }} />
+              </div>
             </div>
-          ))}
-          {/* Fallback for static example */}
-          {categories.length === 0 && (
-            <>
-              <div className="categoria">Categoría <br /> Items</div>
-              <div className="categoria">Categoría <br /> Items</div>
-              <div className="categoria">Categoría <br /> Items</div>
-              <div className="categoria electronica">Electrónica <br /> 3</div>
-            </>
-          )}
-        </div>
-      </div>
-
-      <div className="productos-section">
-        <h3>
-          <em>Productos</em>
-        </h3>
-        {selectedProducts.length > 0 ? (
-          <ul className="selected-products">
-            {selectedProducts.map((product, index) => (
-              <li key={index} className="product-item">{product}</li>
-            ))}
-          </ul>
-        ) : (
-          <p>No hay productos seleccionados</p>
-        )}
-        <button
-          className="carrito-button"
-          onClick={() => cargarContenido("VentasCarrito")}
-        >
-          ENVIAR AL CARRITO 🛒
-        </button>
-      </div>
-
-      {/* Modal flotante de la lista de clientes */}
-      {showClientList && (
-        <div className="modal-overlay">
-          <div className="modal">
-            <h3>Lista de Clientes</h3>
-            <button
-              className="close-button"
-              onClick={() => setShowClientList(false)}
-            >
-              X
-            </button>
-            <div className="client-list">
-              {clients.map((client, index) => (
-                <div
-                  key={index}
-                  className="client-item"
-                  onClick={() => handleClientSelect(client.name || client.userName)}
-                >
-                  {client.name || client.userName}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 18 }}>
+              <input type="text" placeholder="Nombre del Cliente" value={client} onChange={e => setClient(e.target.value)} style={{ flex: 1, border: '2px solid #d33fff', borderRadius: 6, padding: 10, background: '#fff', fontSize: 16 }} />
+              <button style={{ background: '#d33fff', color: '#fff', border: 'none', borderRadius: 8, fontSize: 28, width: 44, height: 44, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700 }}>＋</button>
+            </div>
+            <div style={{ borderTop: '2px solid #d33fff', marginTop: 10, paddingTop: 10 }}>
+              <div style={{ fontStyle: 'italic', color: '#6a1b9a', fontWeight: 600, fontSize: 18, textAlign: 'center', marginBottom: 8 }}>Productos</div>
+              <div style={{ minHeight: 80, maxHeight: 120, overflowY: 'auto', background: '#fff', borderRadius: 6, border: 'none', marginBottom: 10 }}>
+                {/* Aquí iría la lista de productos seleccionados */}
+              </div>
+              <button style={{ width: '60%', background: '#d33fff', color: '#fff', fontWeight: 700, fontSize: 16, border: 'none', borderRadius: 8, padding: '10px 0', margin: '0 auto', letterSpacing: 1, display: 'block' }}>ENVIAR AL CARRITO 🛒</button>
+            </div>
+          </div>
+          {/* Panel Categorías */}
+          <div style={{ flex: 1, border: '2px solid #d33fff', borderRadius: 12, background: '#fff', padding: 20, minWidth: 220, maxWidth: 400 }}>
+            <div style={{ fontWeight: 700, fontSize: 22, color: '#222', textAlign: 'center', marginBottom: 18, letterSpacing: 1, fontFamily: 'monospace' }}>Categorías</div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, justifyContent: 'center' }}>
+              {categories.map((cat, idx) => (
+                <div key={idx} style={{ border: '2px solid #d33fff', borderRadius: 8, background: cat.color, color: '#6a1b9a', fontWeight: 700, fontSize: 16, padding: '10px 18px', minWidth: 100, textAlign: 'center', marginBottom: 4 }}>
+                  {cat.nombre}<br /><span style={{ fontWeight: 400, fontSize: 15 }}>{cat.items}</span>
                 </div>
               ))}
             </div>
           </div>
         </div>
-      )}
-
-      {/* Modal flotante de la lista de productos */}
-      {showProductList && (
-        <div className="modal-overlay">
-          <div className="modal">
-            <h3>Lista de Productos</h3>
-            <button
-              className="close-button"
-              onClick={() => setShowProductList(false)}
-            >
-              X
-            </button>
-            <div className="product-list">
-              {products.map((product, index) => (
-                <div
-                  key={index}
-                  className="product-item"
-                  onClick={() => handleProductSelect(product.nombre || product.descripcion)}
-                >
-                  {product.nombre || product.descripcion}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {error && <p className="error-message">{error}</p>}
-      {loading && <p>Cargando...</p>}
+      </div>
     </div>
   );
 };
 
-export default NuevaVenta;
+export default VentasM;

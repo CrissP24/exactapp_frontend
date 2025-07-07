@@ -1,71 +1,84 @@
-/* Estilo del Sidebar */
 .sidebar {
   position: fixed;
-  width: 220px; 
   top: 0;
   left: 0;
-  height: 100%; 
-  background: rgba(255, 255, 255, 0.9); 
+  width: 220px;
+  height: 100vh;
+  background: #ffffff;
   padding-top: 20px;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(8px);
-  transition: width 0.3s ease;
+  z-index: 100;
+  overflow-y: auto;
+  font-family: 'Segoe UI', sans-serif;
 }
 
-/* Contenedor del logo */
 .logo-container {
   text-align: center;
-  padding: 10px;
+  margin-bottom: 15px;
 }
 
 .logo {
-  width: 100px; 
+  width: 120px;
   height: auto;
-  border-radius: 10px;
+  border-radius: 15px;
 }
 
-/* Lista de navegación */
-.sidebar nav ul {
+.nombre-app {
+  font-size: 16px;
+  color: #9933cc;
+  margin-top: 5px;
+}
+
+.menu-lista {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.sidebar nav ul li {
+.menu-item {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 9px ;
-  background-color: rgba(255, 216, 245, 0.9);
-  border-radius: 12px;
-  margin: 10px;
+  gap: 12px;
+  padding: 10px 15px;
+  margin: 8px 12px;
+  background-color: #ffe6f5;
+  border-radius: 20px;
   cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.sidebar nav ul li:hover {
-  background-color: #a52f9be3;
-  color: #fff;
-  transform: scale(1.05);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-}
-
-/* Iconos de menú */
-.sidebar nav ul li img {
-  width: 28px;
-  height: 28px;
-}
-
-/* Texto del menú */
-.sidebar nav ul li .menu-item-text {
-  font-size: 16px;
-  font-weight: bold;
+  transition: 0.3s ease;
+  font-weight: 500;
   color: #333;
 }
 
-.sidebar nav ul li:hover .menu-item-text {
-  color: #fff;
+.menu-item:hover {
+  background-color: #d980ff;
+  color: white;
+  transform: scale(1.02);
 }
+
+.menu-item:hover img {
+  filter: brightness(0) invert(1);
+}
+
+.menu-item span {
+  font-size: 15px;
+}
+
+.menu-item img.icono {
+  width: 26px;
+  height: 26px;
+}
+
+.menu-item.activo {
+  background: linear-gradient(to right, #f093fb, #f5576c);
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.menu-item.activo img {
+  filter: brightness(0) invert(1);
+}
+
 
 /* Contenedor principal */
 .app-container {

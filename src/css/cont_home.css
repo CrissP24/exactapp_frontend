@@ -68,100 +68,271 @@
 
 
 /* Sección principal */
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f5f5f5;
+}
+
 .fondo {
-  text-align: center;
-  background: #fff;
+  background-color: #f3e5f5;
+  border: 2px solid #d33fff;
+  border-radius: 15px;
   padding: 20px;
-  width: 1000px;
-  height: 300px;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 .fondo h2 {
-  color: #6a5acd;
-  font-size: 20px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 15px;
+  text-transform: uppercase;
 }
 
 .cont {
   display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 20px;
-}
-.cont {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 20px;
+  justify-content: space-around;
+  gap: 10px;
 }
 
-.cont button {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  
-  padding: 15px;
+.cont_producto, .cont_miembros, .cont_agg_producto {
+  background-color: #d3c1e9;
+  border: 2px solid #d3c1e9;
   border-radius: 10px;
-  width: 2100px;
+  padding: 15px;
+  width: 30%;
+  text-align: center;
   cursor: pointer;
-  transition: transform 0.3s ease-in-out;
+  transition: all 0.3s ease;
 }
+
+.cont_producto h3, .cont_miembros h3, .cont_agg_producto h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.imgproduct, .cont_miembros img, .cont_agg_producto img {
+  width: 40px;
+  height: 40px;
+}
+
+.cont_producto:hover, .cont_miembros:hover, .cont_agg_producto:hover {
+  background-color: #c4a7d6;
+  transform: scale(1.05);
+}
+
+/* Botones de video tutorial con color especial */
+.fondo .cont .cont_producto {
+  background-color: #f3e5f5;
+  border: 2px solid #d33fff;
+}
+
+.fondo .cont .cont_producto i {
+  color: #6a1b9a;
+}
+
+.fondo .cont .cont_producto span {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.video-tutorial {
+  background-color: #f3e5f5;
+  border: 2px solid #d33fff;
+  border-radius: 15px;
+  padding: 20px;
+  text-align: center;
+}
+
+.video-tutorial h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+}
+
+.video-icons {
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+}
+
+.video {
+  background-color: #e0e0e0;
+  border: 2px solid #d3c1e9;
+  border-radius: 10px;
+  padding: 10px;
+  width: 20%;
+  text-align: center;
+}
+
+.video img {
+  width: 30px;
+  height: 30px;
+}
+
+.video p {
+  font-size: 12px;
+  color: #666;
+  margin-top: 5px;
+}
+
+.container-box {
+  border: 2px solid #d33fff;
+  border-radius: 12px;
+  background-color: #fff;
+  padding: 15px 25px;
+  box-shadow: 0 4px 10px rgba(106, 27, 154, 0.1);
+}
+
+.logo-text {
+  font-size: 32px;
+  font-weight: bold;
+  color: #6a1b9a;
+}
+
+.logo-text:hover {
+  text-shadow: 0px 0px 3px #a866e1;
+}
+
+.btn-header-round {
+  border: 2px solid #d33fff;
+  border-radius: 50px;
+  background-color: white;
+  color: #000;
+  font-weight: bold;
+  padding: 6px 20px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.btn-header-round:hover {
+  background-color: #f7e8ff;
+  color: #6a1b9a;
+  box-shadow: 0 0 8px rgba(211, 63, 255, 0.4);
+}
+
+.btn-ingresar-strong {
+  border: 2px solid #d33fff;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #f9e1ff, #e4ccff);
+  font-weight: bold;
+  padding: 8px 15px;
+  color: #000;
+  text-align: left;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.btn-ingresar-strong span {
+  color: #6a1b9a;
+}
+
+.btn-ingresar-strong .ingresar-web-text {
+  font-size: 13px;
+  font-weight: bold;
+  color: #573deb;
+  display: block;
+  margin-top: 2px;
+}
+
+.btn-ingresar-strong:hover {
+  background: linear-gradient(135deg, #e5c9ff, #e4ccff);
+  transform: scale(1.02);
+  box-shadow: 0 0 10px rgba(136, 65, 172, 0.3);
+}
+
+.additional-note {
+  font-size: 12px;
+  color: #666;
+  font-style: italic;
+  border: 2px solid #d3c1e9;
+  border-radius: 5px;
+  padding: 5px 15px;
+  background-color: transparent;
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.exactita-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #f8eaff;
+  color: #6a1b9a;
+  border: 2px solid #d3c1e5;
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  font-weight: bold;
+  font-size: 14px;
+  box-shadow: 0 4px 8px rgba(106, 27, 154, 0.3);
+  z-index: 9999;
+  transition: all 0.3s ease-in-out;
+}
+
+.exactita-button:hover {
+  background-color: #e6d4f4;
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .logo-text {
+    font-size: 24px;
+  }
+
+  .exactita-button {
+    width: 60px;
+    height: 60px;
+    font-size: 12px;
+    bottom: 15px;
+    right: 15px;
+  }
+
+  .cont {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .cont_producto, .cont_miembros, .cont_agg_producto {
+    width: 100%;
+  }
+
+  .video-icons {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .video {
+    width: 100%;
+  }
+}
+
 .cont_producto{
   background: #b9b9b9;
   border: 1px solid #000000;
 }
 .cont_agg_producto{
-  background-color: #fde7be;
-  border: 1px solid #ffab3d;
-}
-.cont_miembros{
   background-color: #b2ffc3;
   border: 1px solid #297536;
 }
-
-.cont button:hover {
-  transform: scale(1.05);
+.cont_miembros{
+ 
+  background-color: #fde7be;
+  border: 1px solid #ffab3d;
 }
 
-.cont button img {
-  width: 80px;
-  height: 80px;
-}
 
-/* Sección de video tutorial */
-.video-tutorial {
-  margin-top: 30px;
-  text-align: center;
-  background: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
 
-.video-icons {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-top: 15px;
-}
 
-.video-icons div {
-  width: 80px;
-  height: 80px;
-  background: #e6e6fa;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background 0.3s;
-}
 
-.video-icons div:hover {
-  background: #8d598d;
-}
 .floating-form {
   position: fixed;
   top: 0;

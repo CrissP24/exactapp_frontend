@@ -1,0 +1,146 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+  }
+  
+  .container-box {
+    border: 2px solid #d33fff;
+    border-radius: 12px;
+    background-color: #fff;
+    padding: 15px 25px;
+    box-shadow: 0 4px 10px rgba(106, 27, 154, 0.1);
+  }
+  
+  .logo-text {
+    font-size: 32px;
+    font-weight: bold;
+    color: #6a1b9a;
+  }
+  
+  .logo-text:hover {
+    text-shadow: 0px 0px 3px #a866e1;
+  }
+  
+  .btn-header-round {
+    border: 2px solid #d33fff;
+    border-radius: 50px;
+    background-color: white;
+    color: #000;
+    font-weight: bold;
+    padding: 6px 20px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-header-round:hover {
+    background-color: #f7e8ff;
+    color: #6a1b9a;
+    box-shadow: 0 0 8px rgba(211, 63, 255, 0.4);
+  }
+  
+  .btn-ingresar-strong {
+    border: 2px solid #d33fff;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #f9e1ff, #e4ccff);
+    font-weight: bold;
+    padding: 8px 15px;
+    color: #000;
+    text-align: left;
+    font-size: 14px;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-ingresar-strong span {
+    color: #6a1b9a;
+  }
+  
+  .btn-ingresar-strong .ingresar-web-text {
+    font-size: 13px;
+    font-weight: bold;
+    color: #573deb;
+    display: block;
+    margin-top: 2px;
+  }
+  
+  .btn-ingresar-strong:hover {
+    background: linear-gradient(135deg, #e5c9ff, #e4ccff);
+    transform: scale(1.02);
+    box-shadow: 0 0 10px rgba(136, 65, 172, 0.3);
+  }
+  
+  .main-section-box {
+    background-color: #f3e5f5;
+    border: 2px solid #d33fff;
+    border-radius: 15px;
+    padding: 20px;
+    min-height: 200px;
+  }
+  
+  .section-button {
+    background-color: #d3c1e9;
+    border: 2px solid #d3c1e9;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #333;
+    margin-right: 10px;
+  }
+  
+  .stats-box {
+    background-color: #e0e0e0;
+    border: 2px solid #d3c1e9;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #333;
+    min-width: 150px;
+    text-align: center;
+  }
+  
+  .additional-note {
+    font-size: 12px;
+    color: #666;
+    font-style: italic;
+    border: 2px solid #d3c1e9;
+    border-radius: 5px;
+    padding: 5px 15px;
+    background-color: transparent;
+    text-align: center;
+    margin-bottom: 50px;
+  }
+  
+  .exactita-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #f8eaff;
+    color: #6a1b9a;
+    border: 2px solid #d3c1e5;
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    font-weight: bold;
+    font-size: 14px;
+    box-shadow: 0 4px 8px rgba(106, 27, 154, 0.3);
+    z-index: 9999;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .exactita-button:hover {
+    background-color: #e6d4f4;
+    transform: scale(1.05);
+  }
+  
+  @media (max-width: 768px) {
+    .logo-text {
+      font-size: 24px;
+    }
+  
+    .exactita-button {
+      width: 60px;
+      height: 60px;
+      font-size: 12px;
+      bottom: 15px;
+      right: 15px;
+    }
+  }

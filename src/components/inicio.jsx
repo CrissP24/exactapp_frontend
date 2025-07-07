@@ -8,7 +8,7 @@ import perfilUsuario from '../data-icono/usuario/Usuario1.png';
 import AddProductForm from './AddProductForm';
 import CategoryForm from './CategoryForm';
 
-const ContenidoHome = ({ cargarContenido }) => {
+const Inicio = ({ cargarContenido }) => {
   const [showProductForm, setShowProductForm] = useState(false);
   const [showCategoryForm, setShowCategoryForm] = useState(false);
   const [categories, setCategories] = useState([]);
@@ -126,4 +126,4 @@ const ContenidoHome = ({ cargarContenido }) => {
   );
 };
 
-export default ContenidoHome;
+export default Inicio;

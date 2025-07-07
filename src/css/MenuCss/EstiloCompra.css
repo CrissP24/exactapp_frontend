@@ -1,0 +1,97 @@
+.purchase-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.left-panel, .right-panel {
+    border: 2px solid purple;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.left-panel {
+    width: 60%;
+}
+
+.right-panel {
+    width: 35%;
+    background-color: #f0e0f0;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+}
+
+.back-btn {
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.invoice-details, .provider-section, .item-row, .summary {
+    display: flex;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+input {
+    padding: 5px;
+    border: 1px solid purple;
+    border-radius: 3px;
+}
+
+.add-btn {
+    background-color: purple;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+}
+
+.extract-xml, .payment-form {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 3px;
+}
+
+.payment-form {
+    background-color: purple;
+}
+
+.total-section, .payment-method {
+    margin: 10px 0;
+}
+
+.save-btn {
+    background-color: purple;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    display: block;
+    margin: 20px auto;
+}
+
+.user-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.user-icon {
+    background-color: #ff69b4;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

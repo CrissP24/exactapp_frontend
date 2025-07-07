@@ -27,7 +27,10 @@ const AggClientesP = lazy(() => import("./contenido_de_home/nueva_venta.jsx"));
 const VCarrito = lazy(() => import("./Menu/VentasCarrito.jsx"));
 
 // Sidebar componente
+
 const Sidebar = ({ cargarContenido }) => {
+  const [activo, setActivo] = useState("InicioMenu");
+
   const menuItems = [
     { image: inicioIcon, text: "Inicio", endpoint: "InicioMenu" },
     { image: productosIcon, text: "Productos", endpoint: "ProductosMenu" },
@@ -40,17 +43,27 @@ const Sidebar = ({ cargarContenido }) => {
     { image: configuracionIcon, text: "Configuración", endpoint: "ConfiguracionMenu" },
   ];
 
+  const handleClick = (endpoint) => {
+    setActivo(endpoint);
+    cargarContenido(endpoint);
+  };
+
   return (
     <div className="sidebar">
       <div className="logo-container">
-        <img src={exactaAppLogo} alt="Exact-App Logo" className="logo" />
+        <img src={exactaAppLogo} alt="Logo ExactApp" className="logo" />
+        <h3 className="nombre-app">&lt; Exact-App &gt;</h3>
       </div>
       <nav>
-        <ul>
+        <ul className="menu-lista">
           {menuItems.map((item, index) => (
-            <li key={index} onClick={() => cargarContenido(item.endpoint)}>
-              <img src={item.image} alt={item.text} className="menu-item-icon" />
-              <span className="menu-item-text">{item.text}</span>
+            <li
+              key={index}
+              onClick={() => handleClick(item.endpoint)}
+              className={`menu-item ${activo === item.endpoint ? "activo" : ""}`}
+            >
+              <img src={item.image} alt={item.text} className="icono" />
+              <span>{item.text}</span>
             </li>
           ))}
         </ul>
