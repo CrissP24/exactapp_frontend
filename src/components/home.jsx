@@ -9,7 +9,7 @@ import proveedorIcon from "../data-icono/7. Provedores.png"; // Assuming you hav
 import reportesIcon from "../data-icono/9. Reportes.png"; // Assuming you have this icon
 import inventarioIcon from "../data-icono/8. Inventario.png"; // Assuming you have this icon
 import configuracionIcon from "../data-icono/compras.png"; // Assuming you have this icon
-import exactaAppLogo from "../data-icono/LogoEA.PNG";
+import exactaAppLogo from "../data-icono/LogoEA.png";
 
 
 // Carga diferida de los componentes
