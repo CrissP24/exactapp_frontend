@@ -1,0 +1,16 @@
+{
+    "invoiceNumber": "00050",
+    "date": "2024-09-13",
+    "client": "Cliente Ejemplo",
+    "products": [
+      {
+        "id": "1234567890",
+        "nombre": "Producto Ejemplo",
+        "categoria": "1",
+        "costo": "10.00",
+        "precio": "15.00",
+        "cantidad": "2",
+        "moneda": "USD"
+      }
+    ]
+  }

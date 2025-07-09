@@ -5,37 +5,21 @@ import clienteIcon from '../data-icono/cont_home_icono/Clientes.png';
 import productoIcon from '../data-icono/cont_home_icono/producto_ventas.png';
 import ventasIcon from '../data-icono/cont_home_icono/ventas.png';
 import perfilUsuario from '../data-icono/usuario/Usuario1.png';
+
 import AddProductForm from './AddProductForm';
 import CategoryForm from './CategoryForm';
 
-const ContenidoHome = ({ cargarContenido }) => {
+const ContenidoHome = ({ cargarContenido, companyId }) => {
   const [showProductForm, setShowProductForm] = useState(false);
   const [showCategoryForm, setShowCategoryForm] = useState(false);
   const [categories, setCategories] = useState([]);
-  const [user, setUser] = useState(null);
   const [company, setCompany] = useState(null);
 
-  const COMPANIA_ID = "c8faa65e-1343-46e4-b0de-fe3b3a82d709";
-  const CATEGORIA_API_URL = `https://nova-inventario-api.infor-business.com/inventario/1.0/${COMPANIA_ID}/Categoria`;
-
-  // Fetch user data
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await fetch('https://aadministracion.infor-business.com/api/1.0/Usuario', {
-          headers: { 'Content-Type': 'application/json' },
-        });
-        const data = await response.json();
-        setUser(data);
-      } catch (error) {
-        console.error('Error fetching user:', error);
-      }
-    };
-
-    // Fetch company data
     const fetchCompany = async () => {
+      if (!companyId) return;
       try {
-        const response = await fetch('https://aadministracion.infor-business.com/api/1.0/Compania', {
+        const response = await fetch(`https://nova-pos-api.infor-business.com/POS/1.0/Compania/${companyId}`, {
           headers: { 'Content-Type': 'application/json' },
         });
         const data = await response.json();
@@ -45,82 +29,89 @@ const ContenidoHome = ({ cargarContenido }) => {
       }
     };
 
-    // Fetch categories
-    const fetchCategories = async () => {
-      try {
-        const response = await fetch(CATEGORIA_API_URL, {
-          headers: { 'Content-Type': 'application/json' },
-        });
-        const data = await response.json();
-        setCategories(data.data || []);
-      } catch (error) {
-        console.error('Error fetching categories:', error);
-      }
-    };
-
-    fetchUser();
     fetchCompany();
-    fetchCategories();
-  }, []);
+  }, [companyId]);
 
   return (
-    <div id="contenidos">
+    <div className="inicio-container">
+      {/* Usuario y nombre de negocio alineados a la derecha */}
       <div className="iconoNombre">
-        <div>
-          <h4>{company?.razonSocial || 'Nombre del negocio'}</h4>
-          <h4>{company?.tipoNegocio?.nombre || 'Categoria del negocio'}</h4>
+        <div className="infoNegocio">
+          <h4>{company?.razonSocial || 'Nombre del Negocio'}</h4>
+          <h4>{company?.tipoNegocio?.nombre || 'Categoría del Negocio'}</h4>
         </div>
         <div className="usuarioIcono">
           <button onClick={() => cargarContenido('perfil')}>
-            <img src={perfilUsuario} alt="icono de usuario" className="imIcon" />
+            <img src={perfilUsuario} alt="Icono de usuario" className="imIcon" />
           </button>
         </div>
       </div>
 
-      <div className="fondo">
-        <h2>Gestión y Facturación sin Limites Ideal para tu negocio Exacta-App</h2>
-        <div className="cont">
-          <button className="cont_producto" onClick={() => setShowProductForm(true)}>
-            <h3>Regista Nuevo Producto</h3>
-            <img className="imgproduct" src={productoIcon} alt="Registrar Producto" />
-          </button>
-          <button className="cont_miembros" onClick={() => cargarContenido('aggClientes')}>
-            <h3>Registra un nuevo clientes</h3>
+      {/* Cuadro principal centrado con fondo blanco y sombra */}
+      <div className="main-card" style={{
+        background: '#fff',
+        borderRadius: '10px',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.12)',
+        padding: '32px 24px',
+        maxWidth: '900px',
+        margin: '0 auto 40px auto',
+        width: '100%',
+      }}>
+        <div className="titulo">
+          <h2>Gestión y Facturación sin Límites</h2>
+          <h3>Ideal para tu negocio: Exacta-App</h3>
+        </div>
+
+        <div className="tarjetas-principales">
+          <div className="tarjeta gris" onClick={() => setShowProductForm(true)}>
+            <p>Registra Nuevo Producto</p>
+            <img src={productoIcon} alt="Registrar Producto" />
+          </div>
+
+          <div className="tarjeta naranja" onClick={() => cargarContenido('aggClientes')}>
+            <p>Registra Nuevo Cliente</p>
             <img src={clienteIcon} alt="Clientes" />
-          </button>
-          <button className="cont_agg_producto" onClick={() => cargarContenido('aggClienstes')}>
-            <h3>Haz una nueva venta</h3>
+          </div>
+
+          <div className="tarjeta verde" onClick={() => cargarContenido('Ventas')}>
+            <p>Haz una Nueva Venta</p>
             <img src={ventasIcon} alt="Venta" />
-          </button>
+          </div>
         </div>
       </div>
 
-      <div className="fondo">
-        <h2>Videos tutorial</h2>
-        <div className="cont">
+      {/* Sección de videos centrada */}
+      <div className="videos-section">
+        <h4>Videos Tutorial</h4>
+        <div className="videos-container">
           {[1, 2, 3, 4].map((v) => (
-            <button key={v} className="cont_producto" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-              <i className="bi bi-play-circle" style={{ fontSize: '48px', color: '#6a1b9a', marginBottom: '10px' }}></i>
-              <span style={{ fontSize: '16px', fontWeight: 600, color: '#333', marginBottom: '5px' }}>xxxxxxxx</span>
-            </button>
+            <div className="video-tarjeta" key={v}>
+              <div className="icono-play">▶️</div>
+              <p>Tutorial {v}</p>
+            </div>
           ))}
         </div>
       </div>
 
-      {/* Floating Forms */}
+      {/* Formularios flotantes */}
       {showProductForm && (
-        <AddProductForm
-          categories={categories}
-          onClose={() => setShowProductForm(false)}
-          onOpenCategoryForm={() => setShowCategoryForm(true)}
-        />
+        <div className="overlay">
+          <AddProductForm
+            categories={categories}
+            onClose={() => setShowProductForm(false)}
+            onOpenCategoryForm={() => setShowCategoryForm(true)}
+          />
+        </div>
       )}
+
       {showCategoryForm && (
-        <CategoryForm
-          categories={categories}
-          setCategories={setCategories}
-          onClose={() => setShowCategoryForm(false)}
-        />
+        <div className="overlay">
+          <CategoryForm
+            categories={categories}
+            setCategories={setCategories}
+            onClose={() => setShowCategoryForm(false)}
+          />
+        </div>
       )}
     </div>
   );

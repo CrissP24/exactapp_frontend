@@ -1,0 +1,43 @@
+{
+    "productos": [
+      {
+        "id": "1234567890",
+        "nombre": "Ejemplo Producto",
+        "categoria": "1",
+        "descripcion": "Descripción del producto",
+        "codigo": "PROD001",
+        "costo": "10.00",
+        "precio": "15.00",
+        "cantidad": "100",
+        "moneda": "USD",
+        "imagen": "data:image/jpeg;base64,/9j/4AAQSkZJRg..."
+      }
+    ],
+    "categorias": [
+      {
+        "id": "1",
+        "nombre": "Electrónica",
+        "variaciones": ["Tamaño", "Color"]
+      },
+      {
+        "id": "2",
+        "nombre": "Ropa",
+        "variaciones": ["Tamaño", "Color"]
+      },
+      {
+        "id": "3",
+        "nombre": "Alimentos",
+        "variaciones": ["Peso"]
+      },
+      {
+        "id": "4",
+        "nombre": "Bebidas",
+        "variaciones": ["Capacidad"]
+      },
+      {
+        "id": "5",
+        "nombre": "Papelería",
+        "variaciones": []
+      }
+    ]
+  }

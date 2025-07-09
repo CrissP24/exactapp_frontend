@@ -37,6 +37,7 @@ const Input = styled.input`
 const ErrorMessage = styled.p`
   color: red;
   margin: 10px 0;
+  font-size: 14px;
 `;
 
 const Login = () => {
@@ -46,13 +47,18 @@ const Login = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const success = login(username, password);
+    setError('');
+    const trimmedUsername = username.trim();
+    const trimmedPassword = password.trim();
+    console.log('Enviando datos al login:', { username: trimmedUsername, password: trimmedPassword });
+
+    const success = await login(trimmedUsername, trimmedPassword);
     if (success) {
-      navigate('/dashboard'); // Redirige a la pantalla protegida
+      navigate('/dashboard');
     } else {
-      setError('Usuario o contraseña incorrectos');
+      setError('Identificación o ID de compañía incorrectos. Verifique sus datos.');
     }
   };
 
@@ -63,13 +69,13 @@ const Login = () => {
         <h2>Iniciar Sesión</h2>
         <Input
           type="text"
-          placeholder="Usuario"
+          placeholder="Identificación (ej. 0992333081001)"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
         <Input
           type="password"
-          placeholder="Contraseña"
+          placeholder="ID de Compañía (ej. 43aeeeda-9961-...)"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />

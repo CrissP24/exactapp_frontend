@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useAuth } from '../../context/AuthContext.jsx'; // Importar el contexto
 import Select from 'react-select';
 import '../../css/usuario_estilo/estilo_perfil.css';
 import Actualizarperfil from '../../data-icono/usuario/Actualizar tu Perfil.png';
@@ -6,34 +7,41 @@ import Actualizarperfil from '../../data-icono/usuario/Actualizar tu Perfil.png'
 const countryOptions = [
   { value: '+1', label: '🇺🇸 USA (+1)' },
   { value: '+52', label: '🇲🇽 México (+52)' },
-  { value: '+593', label: '🇪🇨 Ecuador (+593)' }
+  { value: '+593', label: '🇪🇨 Ecuador (+593)' },
 ];
 
-function PerfilActualizar() {
+function PerfilActualizar({ cargarContenido }) {
+  const { companyId } = useAuth(); // Obtener companyId del contexto
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
-  const API_URL = 'https://aadministracion.infor-business.com/api/1.0/Usuario';
-  const USER_ID = '3fa85f64-5717-4562-b3fc-2c963f66afa6';
+  const API_URL = `https://nova-pos-api.infor-business.com/POS/1.0/Compania`;
 
-  // Fetch user data with GET
+  // Fetch company data with GET
   useEffect(() => {
     const fetchProfile = async () => {
+      if (!companyId) {
+        setError('No se proporcionó ID de compañía');
+        return;
+      }
       setLoading(true);
       try {
-        const response = await fetch(`${API_URL}/${USER_ID}`, {
+        const response = await fetch(`${API_URL}/${companyId}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            // 'Authorization': `Bearer ${token}` // Uncomment and add token if needed
-          }
+            // 'Authorization': `Bearer ${token}` // Descomentar si se necesita token
+          },
         });
 
-        if (!response.ok) throw new Error('Error al obtener los datos del usuario');
-        
+        if (!response.ok) {
+          throw new Error('Error al obtener los datos de la compañía');
+        }
+
         const result = await response.json();
+        console.log('Datos de la compañía:', result); // Depuración
         setProfile(result);
       } catch (error) {
         setError(error.message);
@@ -43,41 +51,86 @@ function PerfilActualizar() {
     };
 
     fetchProfile();
-  }, []);
+  }, [companyId]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setProfile(prev => ({
+    setProfile((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handlePhoneCodeChange = (selectedOption) => {
-    setProfile(prev => ({
+    setProfile((prev) => ({
       ...prev,
-      phoneNumber: selectedOption ? `${selectedOption.value} ` : ''
+      telefono: selectedOption ? `${selectedOption.value} ${prev.telefono?.split(' ')[1] || ''}` : '',
     }));
+  };
+
+  const handleLogoChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfile((prev) => ({
+          ...prev,
+          logo: reader.result,
+          extensionLogo: `.${file.name.split('.').pop()}`,
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleClose = () => {
+    cargarContenido('inicio'); // Regresa a la pantalla principal
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSuccess(''); // Clear previous success message
-    setError('');   // Clear previous error message
+    setSuccess('');
+    setError('');
     try {
-      const response = await fetch(`${API_URL}/${USER_ID}`, {
+      // Crear objeto con los campos originales y actualizar solo los modificados
+      const updatedProfile = {
+        id: profile.id,
+        identificacion: profile.identificacion,
+        razonSocial: profile.razonSocial,
+        nombreComercial: profile.nombreComercial,
+        direccionMatriz: profile.direccionMatriz,
+        abreviatura: profile.abreviatura,
+        ambiente: profile.ambiente,
+        tipoEmision: profile.tipoEmision,
+        contribuyenteEspecial: profile.contribuyenteEspecial,
+        codigoContribuyenteEspecial: profile.codigoContribuyenteEspecial,
+        telefono: profile.telefono,
+        email: profile.email || null,
+        logo: profile.logo,
+        extensionLogo: profile.extensionLogo,
+        obligado: profile.obligado,
+        facturacionElectronica: profile.facturacionElectronica,
+        codigoSeguridadXML: profile.codigoSeguridadXML,
+        contribuyenteRimpe: profile.contribuyenteRimpe,
+        agenteRetencion: profile.agenteRetencion,
+        logoBase: profile.logoBase,
+        deleted: profile.deleted,
+      };
+
+      const response = await fetch(`${API_URL}/${companyId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          // 'Authorization': `Bearer ${token}` // Uncomment and add token if needed
+          // 'Authorization': `Bearer ${token}` // Descomentar si se necesita token
         },
-        body: JSON.stringify(profile)
+        body: JSON.stringify(updatedProfile),
       });
 
-      if (!response.ok) throw new Error('Error al guardar los cambios');
+      if (!response.ok) {
+        throw new Error('Error al guardar los cambios');
+      }
 
       setSuccess('¡Cambios guardados correctamente!');
-      // Clear the success message after 3 seconds
       setTimeout(() => setSuccess(''), 3000);
     } catch (error) {
       setError('No se pudo guardar: ' + error.message);
@@ -86,7 +139,10 @@ function PerfilActualizar() {
 
   return (
     <div className="profile-container">
-      <h2>Actualizar Perfil</h2>
+      <h2>Actualizar Compañía</h2>
+      <span className="close-button" onClick={handleClose}>
+        X
+      </span>
       <img src={Actualizarperfil} alt="Actualizar Perfil" className="profile-image" />
 
       {error && <p className="error-message">{error}</p>}
@@ -97,31 +153,31 @@ function PerfilActualizar() {
       ) : profile ? (
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label>Nombre de Usuario:</label>
+            <label>RUC (Identificación):</label>
             <input
               type="text"
-              name="userName"
-              value={profile.userName || ''}
+              name="identificacion"
+              value={profile.identificacion || ''}
               onChange={handleChange}
             />
           </div>
 
           <div className="form-group">
-            <label>Nombre:</label>
+            <label>Nombre Comercial:</label>
             <input
               type="text"
-              name="name"
-              value={profile.name || ''}
+              name="nombreComercial"
+              value={profile.nombreComercial || ''}
               onChange={handleChange}
             />
           </div>
 
           <div className="form-group">
-            <label>Apellido:</label>
+            <label>Dirección Matriz:</label>
             <input
               type="text"
-              name="lastName"
-              value={profile.lastName || ''}
+              name="direccionMatriz"
+              value={profile.direccionMatriz || ''}
               onChange={handleChange}
             />
           </div>
@@ -142,8 +198,8 @@ function PerfilActualizar() {
               <Select
                 options={countryOptions}
                 onChange={handlePhoneCodeChange}
-                value={countryOptions.find(option =>
-                  profile.phoneNumber?.startsWith(option.value)
+                value={countryOptions.find((option) =>
+                  profile.telefono?.startsWith(option.value)
                 )}
                 placeholder="+"
                 classNamePrefix="react-select"
@@ -151,20 +207,45 @@ function PerfilActualizar() {
             </div>
 
             <div className="form-group">
-              <label>Número de Teléfono:</label>
+              <label>Número de Celular:</label>
               <input
                 type="tel"
-                name="phoneNumber"
-                value={profile.phoneNumber || ''}
+                name="telefono"
+                value={profile.telefono || ''}
                 onChange={handleChange}
-              />
+            />
             </div>
           </div>
 
-          <button type="submit">Guardar Cambios</button>
+          <div className="form-group">
+            <label>Categoría de Negocio:</label>
+            <input
+              type="text"
+              name="categoriaDeNegocio"
+              value={profile.categoriaDeNegocio || 'No tiene'}
+              onChange={handleChange}
+              disabled
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Logo Actual:</label>
+            {profile.logo && <img src={profile.logo} alt="Logo actual" style={{ maxWidth: '200px', marginTop: '10px' }} />}
+          </div>
+
+          <div className="form-group">
+            <label>Subir Nuevo Logo:</label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleLogoChange}
+            />
+          </div>
+
+          <button type="submit">Actualizar</button>
         </form>
       ) : (
-        <p>No se encontraron datos de perfil.</p>
+        <p>No se encontraron datos de la compañía.</p>
       )}
     </div>
   );
