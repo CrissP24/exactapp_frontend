@@ -7,8 +7,39 @@ const VentasM = ({ onGoToCompras }) => {
   const [client, setClient] = useState("");
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [availableProducts, setAvailableProducts] = useState([
+    { id: "1", name: "Producto Ejemplo 1", price: 10 },
+    { id: "2", name: "Producto Ejemplo 2", price: 15 },
+    { id: "3", name: "Leche", price: 5 },
+    { id: "4", name: "Pan", price: 3 },
+    { id: "5", name: "Queso", price: 8 },
+    { id: "6", name: "Jugo de Naranja", price: 6 },
+    { id: "7", name: "Cereal", price: 7 },
+    { id: "8", name: "Galletas", price: 4 },
+    { id: "9", name: "Refresco", price: 5 },
+    { id: "10", name: "Arroz", price: 3 },
+    { id: "11", name: "Azúcar", price: 2 },
+    { id: "12", name: "Café", price: 9 },
+    { id: "13", name: "Té", price: 6 },
+    { id: "14", name: "Pollo", price: 12 },
+    { id: "15", name: "Carne de Res", price: 15 },
+    { id: "16", name: "Pasta", price: 4 },
+    { id: "17", name: "Aceite", price: 7 },
+    { id: "18", name: "Huevos", price: 5 },
+    { id: "19", name: "Mantequilla", price: 6 },
+    { id: "20", name: "Yogur", price: 5 },
+  ]);
 
   useEffect(() => {
+    // Datos de ejemplo para categorías
+    const categoriasEjemplo = [
+      { id: "1", nombre: "Electrónica", variaciones: ["Laptop", "Celular"], color: "#b2f7b8" },
+      { id: "2", nombre: "Ropa", variaciones: ["Camisa", "Pantalón"], color: "#b2f7e6" },
+      { id: "3", nombre: "Alimentos", variaciones: ["Pan"], color: "#b2e0f7" },
+      { id: "4", nombre: "Bebidas", variaciones: ["Refresco"], color: "#d3b2f7" },
+      { id: "5", nombre: "Papelería", variaciones: [], color: "#f7eeb2" },
+    ];
+    localStorage.setItem("appData", JSON.stringify({ categorias: categoriasEjemplo }));
     const appData = JSON.parse(localStorage.getItem("appData")) || { categorias: [] };
     const storedVentasData = JSON.parse(localStorage.getItem("ventasData")) || {
       invoiceNumber: "00050",
@@ -35,20 +66,21 @@ const VentasM = ({ onGoToCompras }) => {
     );
   }, [invoiceNumber, date, client, products]);
 
-  // Simulación: agrega un producto de ejemplo
-  const handleAddProduct = () => {
-    setProducts([
-      ...products,
-      {
-        id: Date.now().toString(),
-        nombre: "Producto Ejemplo",
-        cantidad: 1,
-        precio: 10,
-      },
-    ]);
+  const handleAddProduct = (e) => {
+    const selectedProduct = availableProducts.find(p => p.id === e.target.value);
+    if (selectedProduct) {
+      setProducts([
+        ...products,
+        {
+          id: Date.now().toString(),
+          nombre: selectedProduct.name,
+          cantidad: 1,
+          precio: selectedProduct.price,
+        },
+      ]);
+    }
   };
 
-  // Guardar la venta y redirigir a Compras
   const handleEnviarAlCarrito = () => {
     if (!client || products.length === 0) {
       alert("Completa todos los campos y agrega al menos un producto.");
@@ -63,12 +95,10 @@ const VentasM = ({ onGoToCompras }) => {
     const ventas = JSON.parse(localStorage.getItem("ventas")) || [];
     ventas.push(venta);
     localStorage.setItem("ventas", JSON.stringify(ventas));
-    // Limpiar formulario
     setInvoiceNumber("");
     setDate("");
     setClient("");
     setProducts([]);
-    // Redirigir a Compras si hay callback
     if (typeof onGoToCompras === 'function') {
       onGoToCompras();
     } else {
@@ -78,7 +108,6 @@ const VentasM = ({ onGoToCompras }) => {
 
   return (
     <div style={{ minHeight: "100vh", background: "#fff", padding: 0 }}>
-      {/* Header avatar y datos */}
       <div
         style={{
           display: "flex",
@@ -115,7 +144,6 @@ const VentasM = ({ onGoToCompras }) => {
       </div>
       <div style={{ padding: 30 }}>
         <div style={{ display: "flex", gap: 20, marginBottom: 0 }}>
-          {/* Panel Agregar Nueva Venta */}
           <div
             style={{
               flex: 1,
@@ -212,24 +240,30 @@ const VentasM = ({ onGoToCompras }) => {
                   fontSize: 16,
                 }}
               />
-              <button
+              <select
+                onChange={handleAddProduct}
                 style={{
                   background: "#d33fff",
                   color: "#fff",
                   border: "none",
                   borderRadius: 8,
-                  fontSize: 28,
+                  fontSize: 16,
                   width: 44,
                   height: 44,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   fontWeight: 700,
+                  cursor: "pointer",
                 }}
-                onClick={handleAddProduct}
               >
-                ＋
-              </button>
+                <option value="">+</option>
+                {availableProducts.map((prod) => (
+                  <option key={prod.id} value={prod.id}>
+                    {prod.name}
+                  </option>
+                ))}
+              </select>
             </div>
             <div
               style={{
@@ -293,16 +327,17 @@ const VentasM = ({ onGoToCompras }) => {
               </button>
             </div>
           </div>
-          {/* Panel Categorías */}
           <div
             style={{
               flex: 1,
               border: "2px solid #d33fff",
               borderRadius: 12,
-              background: "#fff",
+              background: "url('https://example.com/wave-pattern.jpg') repeat",
               padding: 20,
               minWidth: 220,
               maxWidth: 400,
+              position: "relative",
+              overflow: "hidden",
             }}
           >
             <div
@@ -314,6 +349,10 @@ const VentasM = ({ onGoToCompras }) => {
                 marginBottom: 18,
                 letterSpacing: 1,
                 fontFamily: "monospace",
+                backgroundColor: "rgba(255, 255, 255, 0.8)",
+                padding: "5px 10px",
+                borderRadius: "5px",
+                display: "inline-block",
               }}
             >
               Categorías
@@ -324,6 +363,8 @@ const VentasM = ({ onGoToCompras }) => {
                 flexWrap: "wrap",
                 gap: 12,
                 justifyContent: "center",
+                position: "relative",
+                zIndex: 1,
               }}
             >
               {categories.map((cat, idx) => (
@@ -332,20 +373,24 @@ const VentasM = ({ onGoToCompras }) => {
                   style={{
                     border: "2px solid #d33fff",
                     borderRadius: 8,
-                    background: cat.color || "#b9fbc0",
-                    color: "#6a1b9a",
+                    background: cat.color || (idx % 2 === 0 ? "#a3e4d7" : "#f7d794"),
+                    color: "#05445e",
                     fontWeight: 700,
                     fontSize: 16,
                     padding: "10px 18px",
                     minWidth: 100,
                     textAlign: "center",
                     marginBottom: 4,
+                    position: "relative",
+                    zIndex: 1,
                   }}
                 >
                   {cat.nombre}
                   <br />
                   <span style={{ fontWeight: 400, fontSize: 15 }}>
-                    {cat.variaciones?.length || 0} Items
+                    {cat.variaciones && Array.isArray(cat.variaciones)
+                      ? cat.variaciones.length
+                      : 0} Items
                   </span>
                 </div>
               ))}

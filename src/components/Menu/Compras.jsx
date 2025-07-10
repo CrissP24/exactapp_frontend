@@ -15,7 +15,6 @@ const ComprasM = () => {
     const [paymentMethod, setPaymentMethod] = useState('');
     const [success, setSuccess] = useState(false);
 
-    // Al cargar, toma la última venta de localStorage
     useEffect(() => {
         const ventas = JSON.parse(localStorage.getItem('ventas')) || [];
         const lastVenta = ventas.length > 0 ? ventas[ventas.length - 1] : null;
@@ -27,7 +26,6 @@ const ComprasM = () => {
         }
     }, []);
 
-    // Calcular totales automáticamente
     useEffect(() => {
         const st = items.reduce((acc, item) => acc + (Number(item.cantidad) * Number(item.precio) || 0), 0);
         setSubTotal(st);
@@ -36,24 +34,20 @@ const ComprasM = () => {
         setTotal(st - discount + ivaVal);
     }, [items, discount]);
 
-    // Editar producto
     const handleItemChange = (idx, field, value) => {
         setItems(items => items.map((item, i) => i === idx ? { ...item, [field]: value } : item));
     };
 
-    // Eliminar producto
     const handleRemoveItem = (idx) => {
         setItems(items => items.filter((_, i) => i !== idx));
     };
 
-    // Guardar compra y simular pago
     const handlePagar = () => {
         if (!provider || items.length === 0 || !paymentMethod) {
             alert('Completa todos los campos y selecciona un método de pago.');
             return;
         }
         setSuccess(true);
-        // Limpiar después de un tiempo
         setTimeout(() => {
             setInvoiceNumber('');
             setDate('');
@@ -80,7 +74,6 @@ const ComprasM = () => {
                 </div>
             </div>
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', padding: 30, gap: 20 }} className="compras-main-responsive">
-                {/* Panel izquierdo (carrito de compras) */}
                 <div className="compras-panel-left" style={{ width: '60%', border: '2px solid #d33fff', borderRadius: 12, background: '#fff', padding: 20, minWidth: 280, maxWidth: 700, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                     <div>
                         <div style={{ display: 'flex', alignItems: 'center', marginBottom: 10 }}>
@@ -131,7 +124,6 @@ const ComprasM = () => {
                         </div>
                     </div>
                 </div>
-                {/* Panel derecho (total y pago) */}
                 <div className="compras-panel-right" style={{ width: '38%', border: '2px solid #d33fff', borderRadius: 12, background: '#f8eaff', padding: 20, position: 'relative', minWidth: 280, maxWidth: 500, marginBottom: 20 }}>
                     <div style={{ marginBottom: 20 }}>
                         <div style={{ fontWeight: 700, fontSize: 18, color: '#6a1b9a', marginBottom: 8 }}>Total a pagar</div>
@@ -150,7 +142,6 @@ const ComprasM = () => {
                     {success && <div style={{ color: 'green', fontWeight: 700, fontSize: 20, textAlign: 'center', marginTop: 20 }}>Pago con éxito</div>}
                 </div>
             </div>
-            {/* Responsive styles */}
             <style>{`
                 @media (max-width: 900px) {
                     .compras-main-responsive {
